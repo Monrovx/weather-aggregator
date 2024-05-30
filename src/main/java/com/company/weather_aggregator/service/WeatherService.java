@@ -1,9 +1,12 @@
 package com.company.weather_aggregator.service;
 
-import com.company.weather_aggregator.dto.WeatherResponse;
+import com.company.weather_aggregator.dto.DayForecast;
+
+import java.util.List;
+import java.util.Map;
 
 public interface WeatherService {
-    WeatherResponse getWeatherForToday(String city);
+    Map.Entry<String, List<DayForecast>> getWeatherForToday(String city);
 
-    WeatherResponse getWeatherForWeek(String city);
+    Map.Entry<String, List<DayForecast>> getWeatherForWeek(String city);
 }

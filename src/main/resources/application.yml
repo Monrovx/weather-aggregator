@@ -1,0 +1,14 @@
+spring:
+  application.name: weather-aggregator
+
+visual-crossing:
+  url: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast"
+  apiKey: "GC22RFQA88SUEPL9HZUMG8WNR"
+  aggregateHours: "24"
+  unitGroup: "metric"
+  contentType: "json"
+
+weather-api:
+  url: "http://api.weatherapi.com/v1/forecast.json"
+  apiKey: "4277c7de4c5e44a0ae5192833242805"
+  language: "ru"
