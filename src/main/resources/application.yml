@@ -12,3 +12,8 @@ weather-api:
   url: "http://api.weatherapi.com/v1/forecast.json"
   apiKey: "4277c7de4c5e44a0ae5192833242805"
   language: "ru"
+
+thread-pool-config:
+  core-pool-size: 3
+  max-pool-size: 3
+  queue-capacity: 100
