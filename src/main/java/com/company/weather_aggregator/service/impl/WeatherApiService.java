@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
@@ -17,7 +19,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 @Service
 public class WeatherApiService implements WeatherService {
     private static final String SERVICE_NAME = "WeatherApi service";
-    private static final int OFFSET_FOR_ONE_DAY = 2;
+    private static final int OFFSET_FOR_ONE_DAY = 1;
     private static final int OFFSET_FOR_WEEK = 8;
     @Autowired
     WeatherApiClientService weatherApiClientService;
@@ -25,20 +27,22 @@ public class WeatherApiService implements WeatherService {
     @Override
     @Async
     public CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForTomorrow(String city) {
-        WeatherApiResponse response = weatherApiClientService.getWeather(city, OFFSET_FOR_ONE_DAY);
+        Optional<WeatherApiResponse> response = weatherApiClientService.getWeather(city, OFFSET_FOR_ONE_DAY);
         return completedFuture(getProcessedWeatherApiResponse(response));
     }
 
     @Override
     @Async
     public CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForWeek(String city) {
-        WeatherApiResponse response = weatherApiClientService.getWeather(city, OFFSET_FOR_WEEK);
+        Optional<WeatherApiResponse> response = weatherApiClientService.getWeather(city, OFFSET_FOR_WEEK);
         return completedFuture(getProcessedWeatherApiResponse(response));
     }
 
-    private Map.Entry<String, List<DayForecast>> getProcessedWeatherApiResponse(WeatherApiResponse response) {
-        String location = response.location().toString();
-        List<DayForecast> forecasts = response.forecast().forecastday().stream()
+    private Map.Entry<String, List<DayForecast>> getProcessedWeatherApiResponse(Optional<WeatherApiResponse> response) {
+        if (response.isEmpty()) return Map.entry(SERVICE_NAME, new ArrayList<>());
+
+        String location = response.get().location().toString();
+        List<DayForecast> forecasts = response.get().forecast().forecastday().stream()
                 .skip(1)
                 .map(forecast ->
                         new DayForecast(location, forecast.day().maxtemp_c(),

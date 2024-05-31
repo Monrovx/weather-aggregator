@@ -6,9 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -18,7 +21,7 @@ public class WeatherApiClientService {
     @Autowired
     private WeatherApiProperties properties;
 
-    public WeatherApiResponse getWeather(String city, Integer days) {
+    public Optional<WeatherApiResponse> getWeather(String city, Integer days) {
         log.info("In: weatherApiWebClient: City: {}, Days: {}", city, days);
 
         var uriTemplate =  UriComponentsBuilder.fromUriString(properties.getUrl())
@@ -28,14 +31,15 @@ public class WeatherApiClientService {
                 .queryParam("days", "{days}")
                 .encode().toUriString();
 
-        WeatherApiResponse response = weatherApiWebClient.get()
+        Optional<WeatherApiResponse> response = weatherApiWebClient.get()
                 .uri(uriTemplate, city, properties.getLanguage(), properties.getApiKey(), days)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, clientResponse ->
-                        Mono.error(new RuntimeException("ErrorResponse : " + clientResponse.bodyToMono(String.class))))
-//                .onStatus(HttpStatusCode::isError, clientResponse -> Mono.empty())
+                .onStatus(HttpStatusCode::isError, ClientResponse::createError)
                 .bodyToMono(WeatherApiResponse.class)
-                .block();
+                .doOnError( error ->
+                        log.warn("WeatherApiWebClient - " + error.getMessage(), error.getLocalizedMessage()))
+                .onErrorComplete()
+                .blockOptional();
 
         log.info("Out: weatherApiWebClient: Response: {}", response);
         return response;

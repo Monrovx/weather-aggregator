@@ -1,6 +1,9 @@
 spring:
   application.name: weather-aggregator
 
+active-client:
+  type: "all" # Correct values ['all', 'visual-crossing', 'weather-api']
+
 visual-crossing:
   url: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast"
   apiKey: "GC22RFQA88SUEPL9HZUMG8WNR"

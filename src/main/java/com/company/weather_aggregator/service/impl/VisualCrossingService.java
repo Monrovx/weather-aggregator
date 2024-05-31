@@ -20,7 +20,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 @Service
 public class VisualCrossingService implements WeatherService {
     private static final String VISUAL_CROSSING_SERVICE_NAME = "VisualCrossing service";
-    private static final int OFFSET_FOR_ONE_DAY = 2;
+    private static final int OFFSET_FOR_ONE_DAY = 1;
     private static final int OFFSET_FOR_WEEK = 8;
     @Autowired
     VisualCrossingWeatherClientService visualCrossingClient;

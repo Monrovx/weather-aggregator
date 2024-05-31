@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.springframework.web.servlet.View;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Optional;
@@ -21,8 +20,6 @@ public class VisualCrossingWeatherClientService {
     private WebClient visualCrossingWebClient;
     @Autowired
     private VisualCrossingProperties properties;
-    @Autowired
-    private View error;
 
     public Optional<VisualCrossingResponse> getWeather(String city, Integer days) throws WebClientResponseException {
         log.info("In: visualCrossingWebClient: City: {}, Days: {}", city, days);
@@ -42,7 +39,8 @@ public class VisualCrossingWeatherClientService {
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, ClientResponse::createError)
                 .bodyToMono(VisualCrossingResponse.class)
-                .doOnError( error -> log.warn("VisualCrossingWebClient - " + error.getMessage(), error))
+                .doOnError( error ->
+                        log.warn("VisualCrossingWebClient - " + error.getMessage(), error.getLocalizedMessage()))
                 .onErrorComplete()
                 .blockOptional();
 
