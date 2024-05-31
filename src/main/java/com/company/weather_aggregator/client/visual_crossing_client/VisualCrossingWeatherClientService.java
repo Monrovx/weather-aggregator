@@ -6,9 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.servlet.View;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -17,8 +21,10 @@ public class VisualCrossingWeatherClientService {
     private WebClient visualCrossingWebClient;
     @Autowired
     private VisualCrossingProperties properties;
+    @Autowired
+    private View error;
 
-    public VisualCrossingResponse getWeather(String city, Integer days) {
+    public Optional<VisualCrossingResponse> getWeather(String city, Integer days) throws WebClientResponseException {
         log.info("In: visualCrossingWebClient: City: {}, Days: {}", city, days);
 
         var uriTemplate =  UriComponentsBuilder.fromUriString(properties.getUrl())
@@ -30,18 +36,17 @@ public class VisualCrossingWeatherClientService {
                 .queryParam("forecastDays", "{days}")
                 .encode().toUriString();
 
-        VisualCrossingResponse response = visualCrossingWebClient.get()
+        Optional<VisualCrossingResponse> response = visualCrossingWebClient.get()
                 .uri(uriTemplate, city, properties.getAggregateHours(), properties.getUnitGroup(),
                         properties.getContentType(), properties.getApiKey(), days)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, clientResponse ->
-                        Mono.error(new RuntimeException("ErrorResponse : " + clientResponse.bodyToMono(String.class))))
+                .onStatus(HttpStatusCode::isError, ClientResponse::createError)
                 .bodyToMono(VisualCrossingResponse.class)
-//                .doOnSuccess(body -> log.debug("Out: weatherApiWebClient: Response: {}", body))
-//                .doOnError(exception -> log.warn("Failed to request, cause {}", exception.getMessage()))
-//                .single()
-                .block();
-        return response;
+                .doOnError( error -> log.warn("VisualCrossingWebClient - " + error.getMessage(), error))
+                .onErrorComplete()
+                .blockOptional();
 
+        log.info("Out: visualCrossingWebClient: Response: {}", response);
+        return response;
     }
 }
