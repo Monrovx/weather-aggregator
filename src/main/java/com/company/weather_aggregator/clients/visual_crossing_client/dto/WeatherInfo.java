@@ -1,4 +1,4 @@
-package com.company.weather_aggregator.client.visual_crossing_client.dto;
+package com.company.weather_aggregator.clients.visual_crossing_client.dto;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

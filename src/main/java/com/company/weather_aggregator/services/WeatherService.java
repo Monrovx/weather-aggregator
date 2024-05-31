@@ -1,4 +1,4 @@
-package com.company.weather_aggregator.service;
+package com.company.weather_aggregator.services;
 
 import com.company.weather_aggregator.dto.DayForecast;
 

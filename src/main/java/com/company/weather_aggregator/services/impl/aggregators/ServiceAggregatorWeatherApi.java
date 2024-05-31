@@ -1,8 +1,10 @@
-package com.company.weather_aggregator.service.impl;
+package com.company.weather_aggregator.services.impl.aggregators;
 
 import com.company.weather_aggregator.dto.DayForecast;
 import com.company.weather_aggregator.dto.WeatherResponseDto;
-import com.company.weather_aggregator.service.ServiceAggregator;
+import com.company.weather_aggregator.services.ServiceAggregator;
+import com.company.weather_aggregator.services.impl.api_services.VisualCrossingService;
+import com.company.weather_aggregator.services.impl.api_services.WeatherApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;

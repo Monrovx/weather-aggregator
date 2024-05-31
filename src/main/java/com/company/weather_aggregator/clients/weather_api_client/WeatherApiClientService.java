@@ -1,7 +1,7 @@
-package com.company.weather_aggregator.client.weather_api_client;
+package com.company.weather_aggregator.clients.weather_api_client;
 
-import com.company.weather_aggregator.client.properties.WeatherApiProperties;
-import com.company.weather_aggregator.client.weather_api_client.dto.WeatherApiResponse;
+import com.company.weather_aggregator.clients.properties.WeatherApiProperties;
+import com.company.weather_aggregator.clients.weather_api_client.dto.WeatherApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
+
 
 import java.util.Optional;
 

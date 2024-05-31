@@ -1,4 +1,4 @@
-package com.company.weather_aggregator.client.properties;
+package com.company.weather_aggregator.clients.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

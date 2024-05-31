@@ -1,9 +1,9 @@
-package com.company.weather_aggregator.service.impl;
+package com.company.weather_aggregator.services.impl.api_services;
 
-import com.company.weather_aggregator.client.weather_api_client.WeatherApiClientService;
-import com.company.weather_aggregator.client.weather_api_client.dto.WeatherApiResponse;
+import com.company.weather_aggregator.clients.weather_api_client.WeatherApiClientService;
+import com.company.weather_aggregator.clients.weather_api_client.dto.WeatherApiResponse;
 import com.company.weather_aggregator.dto.DayForecast;
-import com.company.weather_aggregator.service.WeatherService;
+import com.company.weather_aggregator.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

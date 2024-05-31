@@ -1,7 +1,7 @@
-package com.company.weather_aggregator.client.visual_crossing_client;
+package com.company.weather_aggregator.clients.visual_crossing_client;
 
-import com.company.weather_aggregator.client.properties.VisualCrossingProperties;
-import com.company.weather_aggregator.client.visual_crossing_client.dto.VisualCrossingResponse;
+import com.company.weather_aggregator.clients.properties.VisualCrossingProperties;
+import com.company.weather_aggregator.clients.visual_crossing_client.dto.VisualCrossingResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;

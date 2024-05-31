@@ -1,7 +1,7 @@
-package com.company.weather_aggregator.controller;
+package com.company.weather_aggregator.controllers;
 
 import com.company.weather_aggregator.dto.WeatherResponseDto;
-import com.company.weather_aggregator.service.ServiceAggregator;
+import com.company.weather_aggregator.services.ServiceAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
