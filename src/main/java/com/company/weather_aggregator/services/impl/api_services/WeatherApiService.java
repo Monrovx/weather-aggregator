@@ -20,13 +20,13 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 public class WeatherApiService implements WeatherService {
     private static final String SERVICE_NAME = "WeatherApi service";
     private static final int OFFSET_FOR_ONE_DAY = 1;
-    private static final int OFFSET_FOR_WEEK = 8;
+    private static final int OFFSET_FOR_WEEK = 7;
     @Autowired
     WeatherApiClientService weatherApiClientService;
 
     @Override
     @Async
-    public CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForTomorrow(String city) {
+    public CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForToday(String city) {
         Optional<WeatherApiResponse> response = weatherApiClientService.getWeather(city, OFFSET_FOR_ONE_DAY);
         return completedFuture(getProcessedWeatherApiResponse(response));
     }
@@ -43,7 +43,6 @@ public class WeatherApiService implements WeatherService {
 
         String location = response.get().location().toString();
         List<DayForecast> forecasts = response.get().forecast().forecastday().stream()
-                .skip(1)
                 .map(forecast ->
                         new DayForecast(location, forecast.day().maxtemp_c(),
                                 forecast.day().condition().text(),

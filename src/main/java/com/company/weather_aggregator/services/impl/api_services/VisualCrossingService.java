@@ -21,13 +21,13 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 public class VisualCrossingService implements WeatherService {
     private static final String VISUAL_CROSSING_SERVICE_NAME = "VisualCrossing service";
     private static final int OFFSET_FOR_ONE_DAY = 1;
-    private static final int OFFSET_FOR_WEEK = 8;
+    private static final int OFFSET_FOR_WEEK = 7;
     @Autowired
     VisualCrossingWeatherClientService visualCrossingClient;
 
     @Override
     @Async
-    public CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForTomorrow(String city) {
+    public CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForToday(String city) {
         Optional<VisualCrossingResponse> response = visualCrossingClient.getWeather(city, OFFSET_FOR_ONE_DAY);
         return completedFuture(visualCrossingProcessing(city, response));
     }
@@ -46,7 +46,7 @@ public class VisualCrossingService implements WeatherService {
 
         Forecast forecast = response.get().locations().get(city);
         List<DayForecast> dayForecastList = forecast.values().stream()
-                .skip(2)
+                .skip(1)
                 .map(info -> new DayForecast(forecast.address(), info.temp(), info.conditions(),
                         info.wspd(), info.datetimeStr().toLocalDate())
                 ).toList();

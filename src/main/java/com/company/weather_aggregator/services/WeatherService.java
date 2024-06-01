@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public interface WeatherService {
-    CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForTomorrow(String city);
+    CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForToday(String city);
 
     CompletableFuture<Map.Entry<String, List<DayForecast>>> getWeatherForWeek(String city);
 }

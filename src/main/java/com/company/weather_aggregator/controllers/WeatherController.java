@@ -13,10 +13,10 @@ public class WeatherController {
     @Autowired
     private ServiceAggregator serviceAggregator;
 
-    @GetMapping(path = "/weather/tomorrow")
+    @GetMapping(path = "/weather/today")
     public ResponseEntity<WeatherResponseDto> getWeatherForTomorrow(
             @RequestParam(name = "city", defaultValue = "Krasnodar") String city) {
-        return ResponseEntity.ok(serviceAggregator.getAggregatedInfoForTomorrow(city));
+        return ResponseEntity.ok(serviceAggregator.getAggregatedInfoForToday(city));
     }
 
     @GetMapping(path = "/weather/week")

@@ -24,11 +24,11 @@ public class ServiceAggregatorAllClients implements ServiceAggregator {
     VisualCrossingService visualCrossingService;
 
     @Override
-    public WeatherResponseDto getAggregatedInfoForTomorrow(String city) {
+    public WeatherResponseDto getAggregatedInfoForToday(String city) {
         CompletableFuture<Map.Entry<String, List<DayForecast>>> weatherApiResponseFuture =
-                weatherApiService.getWeatherForTomorrow(city);
+                weatherApiService.getWeatherForToday(city);
         CompletableFuture<Map.Entry<String, List<DayForecast>>> visualCrossingResponseFuture =
-                visualCrossingService.getWeatherForTomorrow(city);
+                visualCrossingService.getWeatherForToday(city);
 
         return getWeatherResponseDto(weatherApiResponseFuture, visualCrossingResponseFuture);
     }

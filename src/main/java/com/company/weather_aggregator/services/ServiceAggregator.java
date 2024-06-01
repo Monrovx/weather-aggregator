@@ -4,7 +4,7 @@ import com.company.weather_aggregator.dto.WeatherResponseDto;
 
 public interface ServiceAggregator {
 
-    WeatherResponseDto getAggregatedInfoForTomorrow(String city);
+    WeatherResponseDto getAggregatedInfoForToday(String city);
 
     WeatherResponseDto getAggregatedInfoForWeek(String city);
 }

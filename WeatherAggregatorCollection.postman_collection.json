@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "41d3fc59-4769-48b7-8353-b5a22845f722",
+		"name": "WeatherAggregatorCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "35324680"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/weather/week?city=Krasnodar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/weather/week?city=Krasnodar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"weather",
+						"week"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "Krasnodar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/weather/tomorrow?city=Krasnodar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/weather/tomorrow?city=Krasnodar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"weather",
+						"tomorrow"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "Krasnodar"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
